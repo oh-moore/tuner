@@ -2,26 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Marvel</title>
+  <title>Lyrics Yo!</title>
     <meta name="description" content=" "/>
     <meta name="keywords" content=""/>           
     <meta name="author" content="@frasiocht"> 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"/>
-    <meta name="format-detection" content="telephone=no">
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <meta name="format-detection" content="telephone=no">    
     <link rel='stylesheet' href='/css/global.css' />    
-    <script src='/js/jquery.js'></script>    
-    <script src="/js/blockui.js"></script>            
-    <script src="/js/jquery.gritter.js"></script>
-    <script src="/js/utils.js"></script>
-    <link rel='stylesheet' href='/css/jquery.gritter.css'/>   
-    <link rel='stylesheet' href='/css/filedrop.css'/>     
+    <script src='/js/jquery.js'></script>       
     <script type="text/javascript">
 	  // unblock when ajax activity stops 
       //$(document).ajaxStop($.unblockUI);
     </script>
 </head>
 <body  ontouchstart="">
+<div id="header" class="header">
+    <div id="headerButtonsWrapper" style="max-width:60em; margin-left:auto; margin-right:auto;">
+        <a href="/">
+            <div id="marvelIcon" class="" style="display:inline-block; padding-right:5em;">
+                <span class="txt_lyricsyo" style="line-height:63px;">LyricsYo</span>
+            </div>
+        </a>
+    </div>
+</div>  
     <?php echo $this->layout()->content; ?>
+    <div style="height:10em;"></div>
 </body>

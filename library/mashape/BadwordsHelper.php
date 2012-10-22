@@ -8,5 +8,50 @@ class BadwordsHelper{
         
     }
     
+    public function getGushyWordsArray()
+    {
+        $gushArray=array("heart","love","loving","lovers","hearts","hug","hugs",
+            "hugging","kiss","kisses","tenderly","miss you","hurt","hurting",
+            "honey","romantic","lovely","pretty","adore","adored","dearly",
+            "exquisite","cherished","cherish","charming", "passion", "affection", 
+            "tenderness", "sexy","emotion","devoted","radiant","marry","wife",
+            "wifey","touch","cuddle","cuddles","flirt","thoughtful","warmhearted",
+            "pleasure","elegance","affection","affectionate","charm","charming",
+            "friend","friends","enchant","attracted","attraction","beautiful",
+            "embrace","embracing","breathtaking","devoted","dreamy","tender",
+            "tenderness","care","caring","beloved");
+        return $gushArray;
+    }
+    
+    
+    public function getMaterialWordsArray()
+    {
+        $materialArray=array("swag","money","cars","car","diamonds","houses","house",
+                        "crib","cribs","bling","dollars","cash","papers","Hermès",
+                        "Chanel","Louis Vuitton","Christian Dior","Versace","Prada",
+                        "Fendi","Armani","Rolls Royce","Bentley","Ferrari","Lamborghini",
+                        "Maserati","Aston Martin","Bugatti","gold","gucci","chains","watches",
+                        "jewels","cash","bills","private jet","first class","roller","ciroc","paper",
+                        "cake","scroll", "boutique","ice","jags", "liquor","crystal","champagne");
+        return $materialArray;        
+    }
+    
+    
+    public function getSexyWordsArray()
+    {
+        $sexyArray=array(
+            "sex","sexing","lovemaking","fucking","porn","kiss","kissing","bend over","cock","dick","pussy","fuck me","titties","lips","ass","cum","dong","tongue","touching"
+        );
+        return $sexyArray;            
+    }
+    
+    public function getWhinyWordsArray()
+    {
+        $whinyArray=array(
+            "sad","cry","crying","lonely","tears","rain","cold","upset","tear drops","miss you","missing you","live without you","apart", "turn back time","sorry","wrong", "hurt"
+        );
+        return $whinyArray;            
+    }    
+    
 }
 ?>
