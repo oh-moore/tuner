@@ -13,6 +13,32 @@ class IndexController extends Zend_Controller_Action
         $this->lyricsYoCombo= new LyricsyoCombinator();
     }
 
+    public function testAction()
+    {
+        $this->_helper->viewRenderer->setNoRender();	//Disable the rendering of a view as we're                                                                                                         //returning JSON content 
+        $this->_helper->getHelper('layout')->disableLayout();	//Disable Layouts as we're returning JSON content                        
+        echo "Hello";
+        $badwordsHelper=new BadwordsHelper();           
+        $badwords=$badwordsHelper->getBadWordsArray();
+        
+        $badwordsFixArray=array();
+        foreach($badwords as $word)
+        {
+            if(!array_key_exists($word, $badwordsFixArray))
+            {
+                $badwordsFixArray[$word]=1;
+            }
+            else {
+                $badwordsFixArray[$word]=$badwordsFixArray[$word]+1;
+            }
+        }
+        
+        foreach($badwordsFixArray as $word => $count)
+        {
+            echo '"'.$word.'",';
+        }
+    }
+    
     public function indexAction()
     {
         $isNew=$this->getRequest()->getParam("isnew");
@@ -111,15 +137,14 @@ class IndexController extends Zend_Controller_Action
         
         if(array_key_exists("sexyTrack",$newJsonLyricsArray))
         {            
-            $theid=$newJsonLyricsArray["sexyTrack"];
-            if(array_key_exists($theid,$newJsonLyricsArray))
+            
+            $sexiestTrack=$newJsonLyricsArray["sexyTrack"];
+            error_log($sexiestTrack);
+            if($sexiestTrack==null)
             {
-                $sexiestTrack=$newJsonLyricsArray[$theid];  
-            }
-            else {
                 $getNewFile=true;
-            }                        
-        }
+            }
+        }        
         else
         {
             $getNewFile=true;
@@ -127,15 +152,12 @@ class IndexController extends Zend_Controller_Action
         
         if(array_key_exists("whinyTrack",$newJsonLyricsArray))
         {            
-            $theid=$newJsonLyricsArray["whinyTrack"];
-            error_log($theid);
-            if(array_key_exists($theid,$newJsonLyricsArray))
+            $whinyTrack=$newJsonLyricsArray["whinyTrack"];
+            error_log($whinyTrack);
+            if($whinyTrack==null)
             {
-                $whinyTrack=$newJsonLyricsArray[$theid];  
-            }
-            else {
                 $getNewFile=true;
-            }              
+            }
         }     
         else
         {
@@ -177,7 +199,7 @@ class IndexController extends Zend_Controller_Action
         {
             $getNewFile=true;
         }          
-        
+ 
         if($getNewFile==true)
         {
             $newJsonLyricsArray=$this->updateJson($newJsonLyricsArray,$fileLyricsJson);
@@ -230,16 +252,30 @@ class IndexController extends Zend_Controller_Action
         $profanityArray=array();
         $gushArray=array();
         $materialArray=array();
+        $sexiestCount=0;
+        $whinyCount=0;
+        $whinyTrack=null;
+        $sexiestTrack=null; 
+        
+        $numPositiveSongs=0;
+        $numNegativeSongs=0;
+        $numLoveSongs=0;
+        
+        $i=0;
         
         foreach($newJsonLyricsArray as $id=>$track)
-        {        
-            if(!array_key_exists("track_id",$track))
+        {                
+            if(!is_array($track))
             {
-                
+                error_log("this is not an array");
+            }
+            else if(!array_key_exists("track_id",$track))
+            {
+                error_log("this is not a track array");
             }
             else
             {
-                error_log($track["track_id"]);
+                //error_log("Track id is ".$track["track_id"]);
 
                 $strLyrics="";
                 if(!array_key_exists("lyrics",$track))
@@ -256,20 +292,20 @@ class IndexController extends Zend_Controller_Action
                     $strLyrics=$track["lyrics"];
                 }
 
-
-                $explodedLyrics=explode(" ", $strLyrics);
-                
-                
+                $strLyrics=  strtolower($strLyrics);
+                $n_words = preg_match_all('/([a-zA-Z]|\xC3[\x80-\x96\x98-\xB6\xB8-\xBF]|\xC5[\x92\x93\xA0\xA1\xB8\xBD\xBE]){2,}/', $strLyrics, $match_arr);
+                $explodedLyrics = $match_arr[0];  
                 //COUNT PROFANITY
                 $countWords=array();
-                $sexiestCount=0;
-                $whinyCount=0;
-                $whinyTrack=null;
-                $sexiestTrack=null;
-                if(!array_key_exists("profanities" ,$track) || count($track["profanities"])!=0)
+
+                if(!array_key_exists("profanities" ,$track) || count($track["profanities"])==0)
                 {
+
+                    $outputLyrics="";
                     foreach($explodedLyrics as $explodedLyric)
-                    {                
+                    {   
+                        
+                        $outputLyrics=$outputLyrics." ".$explodedLyric;
                         foreach($badwordsArray as $badword)
                         {
                             if($explodedLyric==$badword)
@@ -280,41 +316,14 @@ class IndexController extends Zend_Controller_Action
                                     $countWords[$explodedLyric]=1;
                                 }
                                 else {
-                                    $countWords[$explodedLyric]=$countWords[$explodedLyric]+1;
+                                    $countWords[$explodedLyric]=((int)$countWords[$explodedLyric])+1;
                                 }                        
                             }                    
-                        }
-                        $sexyCountInt=0;
-                        foreach($sexywordsArray as $badword)
-                        {
-                            if($explodedLyric==$badword)
-                            {
-                                $sexyCountInt=$sexyCountInt+1;                                  
-                            }                    
-                        }                        
-                        if($sexyCountInt>$sexiestCount)
-                        {
-                            $sexiestCount=$sexyCountInt;
-                            $sexiestTrack=$track["track_id"];
-                        }
-                        
-                        $whinyCountInt=0;
-                        foreach($whinywordsArray as $badword)
-                        {
-                            
-                            if($explodedLyric==$badword)
-                            {
-                                error_log("Whiny count found "+$whinyCountInt);
-                                $whinyCountInt=$whinyCountInt+1;                                  
-                            }                    
-                        }           
-                        
-                        if($whinyCountInt>$whinyCount)
-                        {
-                            $whinyCount=$whinyCountInt;
-                            $whinyTrack=$track["track_id"];
-                        }                        
+                        }   
 
+                    }
+                    if($track["track_id"]=="16992841"){                    
+                        error_log ($outputLyrics);
                     }
                     $track["profanities"]=$countWords;
                 }
@@ -339,6 +348,55 @@ class IndexController extends Zend_Controller_Action
                                                                 "words" => $countWords,
                                                                 "track_id" => $track["track_id"]
                                                             );
+                }
+                
+                if(!array_key_exists("numLove" ,$track))
+                {
+                    $sexyCountInt=0;
+                    $whinyCountInt=0;
+                    $isLoveMentioned=false;
+                    foreach($explodedLyrics as $explodedLyric)
+                    {                
+                        if($explodedLyric=="love" && $isLoveMentioned==false)
+                        {
+                            $isLoveMentioned=true;
+                            $numLoveSongs=$numLoveSongs+1;
+                        }                    
+                        
+                        foreach($sexywordsArray as $badword)
+                        {                                                                       
+                            //error_log("Sexy count found ".$sexyCountInt);
+                            if($explodedLyric==$badword)
+                            {
+                                //error_log("Exploded lyric ".$explodedLyric." and word is ".$badword);                              
+                                $sexyCountInt=$sexyCountInt+1;                                  
+                            }                    
+                        }                        
+                        if($sexyCountInt>$sexiestCount)
+                        {
+                            
+                            $sexiestCount=$sexyCountInt;
+                            $sexiestTrack=$track["track_id"];
+                            
+                        }
+                        
+                        
+                        foreach($whinywordsArray as $badword)
+                        {
+                            //error_log("Whiny count found ".$whinyCountInt);
+                            if($explodedLyric==$badword)
+                            {
+                                //error_log("Whiny count found ".$whinyCountInt);
+                                $whinyCountInt=$whinyCountInt+1;                                  
+                            }                    
+                        }           
+                        
+                        if($whinyCountInt>$whinyCount)
+                        {
+                            $whinyCount=$whinyCountInt;
+                            $whinyTrack=$track["track_id"];
+                        }  
+                    }
                 }
                 
                 //COUNT GUSH
@@ -461,6 +519,7 @@ class IndexController extends Zend_Controller_Action
                         {
                             $posValue=$respVal;
                             $posTrack=$track;
+                            $numPositiveSongs=$numPositiveSongs+1;
                         }
                     } 
                     else if($labelResp=="neg")
@@ -469,24 +528,31 @@ class IndexController extends Zend_Controller_Action
                         {
                             $negValue=$respVal;
                             $negTrack=$track;
+                            $numNegativeSongs=$numNegativeSongs+1;
                         }
                     }                
                 }
                 $newJsonLyricsArray[$id]=$track;
                 }
+                $i=$i+1;
             }
-            $newJsonLyricsArray["whinyTrack"]=$whinyTrack;
-            $newJsonLyricsArray["sexyTrack"]=$sexiestTrack;
-            $newJsonLyricsArray["negativeTrack"]=$negTrack["track_id"];
-            $newJsonLyricsArray["positiveTrack"]=$posTrack["track_id"];
-    
-            $newJsonLyricsArray["profanityArray"]=$profanityArray; 
-            $newJsonLyricsArray["gushArray"]=$gushArray; 
-            $newJsonLyricsArray["materialArray"]=$materialArray; 
+        
+        $newJsonLyricsArray["whinyTrack"]=$whinyTrack;
+        $newJsonLyricsArray["sexyTrack"]=$sexiestTrack;
+        $newJsonLyricsArray["negativeTrack"]=$negTrack["track_id"];
+        $newJsonLyricsArray["positiveTrack"]=$posTrack["track_id"];
 
-            $fh = fopen($fileLyricsJson, 'w');  
-            fwrite($fh, Zend_Json_Encoder::encode($newJsonLyricsArray));
-            fclose($fh);     
+        $newJsonLyricsArray["profanityArray"]=$profanityArray; 
+        $newJsonLyricsArray["gushArray"]=$gushArray; 
+        $newJsonLyricsArray["materialArray"]=$materialArray; 
+        $newJsonLyricsArray["numPositive"]=$numPositiveSongs;
+        $newJsonLyricsArray["numNegative"]=$numNegativeSongs;
+        $newJsonLyricsArray["numLove"]=$numLoveSongs;
+        $newJsonLyricsArray["numProfane"]=count($profanityArray);
+
+        $fh = fopen($fileLyricsJson, 'w');  
+        fwrite($fh, Zend_Json_Encoder::encode($newJsonLyricsArray));
+        fclose($fh);     
             
         return $newJsonLyricsArray;
     }

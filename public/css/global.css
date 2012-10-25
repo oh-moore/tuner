@@ -20,6 +20,7 @@ a{
 
 ol, ul {
     list-style: none;
+    overflow:visible;
 }
 
 .header {
@@ -44,7 +45,7 @@ ol, ul {
 .txt_normal{
 	color: #5e5e5e; /* text color */
 	font-family: "Avenir";
-	font-size: 17px;
+	font-size: 19px;
         font-weight:500;
 }
 
@@ -74,7 +75,6 @@ ol, ul {
 .carousel_holder
 {
     width:900px;
-    height: 200px;
     margin-left:auto;
     margin-right:auto;
     background-color: #fff;
@@ -114,17 +114,26 @@ ol, ul {
 .artistHolderWrapper
 {
     width: 175px;
-    height: 175px;
     background-color:white;
     display:inline-block;
+    vertical-align: top;
 }
 
 .artistSmallHolderWrapper
 {
+    margin-left:auto;
+    margin-right:auto;
     width: 215px;
-    height: 215px;
     background-color:white;
     display:inline-block;
+    vertical-align: top;
+}
+
+.artist_small_txt_holder {
+    margin-left:auto;
+    margin-right:auto;
+    width:215px;
+    text-align:center;
 }
 
 .artist_txt_holder {
@@ -150,34 +159,31 @@ ol, ul {
     font-size: 15px;
     font-weight:400;
     text-align:center;
-    padding-left:14px;    
+    padding-left:14px; 
+    line-height: 19px;
+    
 }
 
 .carousel_position
 {
-    width: 15px;
-    height: 15px;	
+    width: 12px;
+    height: 12px;	
     margin-left:5px;
     margin-right:5px;	 
-    border-radius: 8px;
+    border-radius: 6px;
     background-color:black;
     display:inline-block;
   }
 
 .carousel_position.on
 {
-    background-color: #449fec;
-    background-image: -moz-linear-gradient(90deg, #8dc9fb 0%, #449fec 100%); /* gradient overlay */
-    background-image: -o-linear-gradient(90deg, #8dc9fb 0%, #449fec 100%); /* gradient overlay */
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #449fec), color-stop(100%, #ffffff));
-    background-image: -webkit-linear-gradient(90deg, #8dc9fb 0%, #449fec 100%); /* gradient overlay */
-    background-image: linear-gradient(90deg, #8dc9fb 0%, #449fec 100%); /* gradient overlay */     
+    background-color: #ff9174; 
 }
 
 
 .leftButton
 {
-    margin-left:40px;
+    margin-left:5px;
     width: 36px;
     height: 13px;
     background-image: url('/images/left_normal.png');
@@ -189,6 +195,7 @@ ol, ul {
 
 .rightButton
 {
+    margin-right:5px;
     width: 36px;
     height: 13px;
     background-image: url('/images/right_normal.png');
@@ -201,7 +208,7 @@ ol, ul {
 }
 
 .line {
-	width: 960px;
+	width: 900px;
 	height: 2px;
 	background-color: #ddd; /* layer fill content */
 }
@@ -223,4 +230,61 @@ ol, ul {
 
 .txt-artist-title.alt{
     color: #414141;
+}
+
+.topCircleHolder
+{    
+    margin-left:9px;
+    margin-right:auto;
+    width:195px; height:195px;
+    vertical-align:middle;     
+    border-color:#dedede;
+    border-style:solid; 
+    border-width:2px; 
+    border-radius:97.5px;
+}
+
+.topCircleHolder:hover{
+    border-color: #ff9174; 
+}
+
+
+.circleHolder
+{    
+    vertical-align:middle; margin-left:2px; border-color:black; border-style:solid; border-width:1px; border-radius:76px;
+}
+
+.circleHolder:hover{
+    border-color: #ff9174; 
+}
+
+.txt_infograph{
+    font-size:96px;
+    color: #696969;
+}
+
+.txt_infograph.position
+{
+    position:absolute; 
+    text-align:center;
+    width:215px;
+    margin-left:-8px;
+    margin-top:0px;    
+}
+
+.img_emotion_position{
+    margin-left:74px; margin-top:20px;    
+}
+
+.socialHolder{
+    display:inline-block;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    line-height: 35px;    
+    vertical-align: middle;
+}
+
+.txtSpan{
+    text-align:center;   
 }

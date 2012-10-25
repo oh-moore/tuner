@@ -10,7 +10,8 @@ $(document).ready(function(){
         btnNext: ".rightButton",
         btnPrev: ".leftButton",
         visible: 1,
-        circular: false
+        circular: false,
+        speed: 600
     });
     
     $("#leftButton").live("mouseup", function(){
@@ -22,8 +23,35 @@ $(document).ready(function(){
     	setItemsState(true);
    	    console.log("Right button click");
     });    
+    
+    $("#carouselMap").live("swiperight", 
+        function(event)
+        {                      
+            console.log("Clicking left button");
+            $("#leftButton").click();
+        }
+    );
 
+    $("#carouselMap").live("swipeleft", 
+        function(event)
+        {
+            console.log("Clicking right button");
+            $("#rightButton").click();
+        }
+    );     
 
+    //Set number of tracks for profane, negative and positive
+    var numProfane=allTracks["numProfane"];
+    var numLove=allTracks["numLove"];
+    var numNegative=allTracks["numNegative"];
+    var numPositive=allTracks["numPositive"];
+    $("#numProfane").html(numProfane);
+    $("#numLove").html(numLove);
+    $("#numNegative").html(numNegative);
+    $("#numPositive").html(numPositive);
+    
+    
+    
     var numberOfItems=3;
     var currentStatus=1;
     function setItemsState(direction)
@@ -53,13 +81,82 @@ $(document).ready(function(){
 </script>
 
 
-<div class="txt_header_large" style="text-align:center; margin-top:2em; margin-left:5px; margin-right:5px;">
+<div class="txt_header_large" style="text-align:center; margin-top:1.6em; margin-left:5px; margin-right:5px;">
     Music analysis of the Billboard Charts
 </div>
 <div class="txt_normal" style="text-align:center; margin-top:1.7em; margin-left:5px; margin-right:5px;">
     A hack day experiment by <a class="txt_normal link" href="http://twitter.com/mutlu82">@mutlu82</a> and <a class="txt_normal link" href="http://twitter.com/frasiocht">@frasiocht</a> looking at the lyrics and sentiment in popular songs
 </div>
 
+<div style="margin-left:auto; margin-right:auto; max-width: 900px; margin-top:2.5em; margin-bottom:1em;"> 
+                    <div class="txt_normal" style="font-size:36px; margin-bottom:1.1em; font-weight:400; text-decoration: underline; text-align:center; margin-top:1.7em; margin-left:5px; margin-right:5px;">
+                        Weekly round-up the Billboard Top 100
+                    </div>    
+                        
+                    <div class="artistSmallHolderWrapper">                                                         
+                        <div  class='topCircleHolder'>
+                            <div class="img_emotion_position">
+                                <img src="/images/profanity.png"/>
+                            </div>
+                            <div id="numProfane" class="txt_infograph position">
+                                0
+                            </div>
+                        </div>                      
+   
+                        <div class="artist_small_txt_holder" style="margin-top:0.6em;">
+                            <div class="txt_normal" style="text-align:center; padding-left:14px;">Amount of songs containing profanity</div>
+                        </div>                                                                                      
+                    </div>
+
+
+                    <div class="artistSmallHolderWrapper">                                                         
+                        <div  class='topCircleHolder'>
+                            <div class="img_emotion_position">
+                                <img src="/images/love.png"/>
+                            </div>                            
+                            <div id="numLove" class="txt_infograph position">
+                                0
+                            </div>
+                        </div>                      
+   
+                        <div class="artist_small_txt_holder" style="margin-top:0.6em;">
+                            <div class="txt_normal" style="text-align:center; padding-left:14px;">Amount of songs containing 'love' </div>
+                        </div>                                                                                      
+                    </div>
+
+
+                    <div class="artistSmallHolderWrapper">                                                         
+                         <div  class='topCircleHolder'>
+                            <div class="img_emotion_position">
+                                <img src="/images/positive.png"/>
+                            </div>                             
+                            <div id="numPositive" class="txt_infograph position">
+                                0
+                            </div>
+                        </div>                       
+   
+                        <div class="artist_small_txt_holder" style="margin-top:0.6em;">
+                            <div class="txt_normal" style="text-align:center; padding-left:14px;">Positive songs this week</div>
+                        </div>                                                                                      
+                    </div>
+
+
+                    <div class="artistSmallHolderWrapper">                                                         
+                        <div  class='topCircleHolder'>
+                            <div class="img_emotion_position">
+                                <img src="/images/negative.png"/>
+                            </div>                            
+                            <div id="numNegative" class="txt_infograph position">
+                                0
+                            </div>
+                        </div>                       
+   
+                        <div class="artist_small_txt_holder" style="margin-top:0.6em;">
+                            <div class="txt_normal" style="text-align:center; padding-left:14px;">Negative songs this week</div>
+                        </div>                                                                                      
+                    </div>
+                        
+</div>
 
 <div id="carousel_holder">
         <div id="carousel_images" class="carousel_holder">
@@ -70,36 +167,50 @@ $(document).ready(function(){
                             <div class="div_holder"> 
                                 <div class="div_title_line"></div><div style="max-width:20em; display:inline-block;" class="txt_normal">The songs with the most profanity</div><div class="div_title_line"></div>
                             </div>
-                            <div id="profaneArtistsHolder" style="margin-top:2.5em;">
-                                <?PHP                                                                
-                                    $i=0;
-                                    foreach($this->profanityArray as $profanityTrack)
-                                    {
-                                        if($i>4)break;
-                                        
-                                        $track=$this->trackArray[$profanityTrack["track_id"]];                                        
-                                        ?>      
-                                        
-                                        <div id="artistDetailHolder" class="artistHolderWrapper">
-                                            <div class="artist_holder">
-                                                <img src="<?PHP echo $track["album_coverart_100x100"]; ?>" width="158" height="158" style="vertical-align:middle; margin-left:2px; border-radius:76px;"/>
-                                            </div>
-                                            <div class="artist_txt_holder" style="margin-top:1em;">
-                                                <div class="txt-artist-name"><?PHP echo $track["artist_name"];?></div>                                                
-                                            </div>
-                                            <div class="artist_txt_holder" style="margin-top:0.6em;">
-                                                <div class="txt_normal" style="text-align:center; padding-left:14px;"><?PHP echo $track["track_name"];?></div>
-                                            </div>                                            
-                                            <div class="artist_txt_holder" style="margin-top:0.6em;">
-                                                <div class="txt_cuss_words" style=" padding-left:14px;"><?PHP echo $profanityTrack["count_words"];?> cuss words</div>
-                                            </div>                                              
-                                        </div>
-                                        
-                                        <?PHP
-                                        $i=$i+1;
-                                    }
-                                ?>
-                            </div>
+                                                         
+                                <div id="profaneArtistsHolder" style="margin-top:2.5em;">
+                                    <?PHP                                                                
+                                        $i=0;
+                                        foreach($this->profanityArray as $profanityTrack)
+                                        {
+                                            if($i>4)break;
+
+                                            $track=$this->trackArray[$profanityTrack["track_id"]];                                        
+                                            ?>      
+                                             
+                                                <div id="artistDetailHolder" class="artistHolderWrapper">
+                                                    <div class="artist_holder">
+                                                        <img src="<?PHP echo $track["album_coverart_100x100"]; ?>" width="158" height="158" style="vertical-align:middle; margin-left:2px; border-radius:76px;"/>
+                                                    </div>
+                                                    <div class="artist_txt_holder" style="margin-top:1em;">
+                                                        <div class="txt-artist-name"><?PHP echo $track["artist_name"];?></div>                                                
+                                                    </div>
+                                                    <div class="artist_txt_holder" style="margin-top:0.6em;">
+                                                        <div class="txt_normal" style="text-align:center; padding-left:14px;"><?PHP echo $track["track_name"];?></div>
+                                                    </div>                                            
+                                                    <div class="artist_txt_holder" style="margin-top:0.6em;">
+                                                        <a href="#" class="tooltip">                                                            
+                                                            <div class="txt_cuss_words" style=" padding-left:14px;"><?PHP echo $profanityTrack["count_words"];?> 
+                                                                <div style="text-decoration: underline; display:inline-block;">cuss</div> words
+                                                                <span class="txtSpan">
+                                                                    <?PHP 
+                                                                        foreach($profanityTrack["words"] as $aWord => $number)
+                                                                        {                                                                            
+                                                                            echo "<p>".$aWord." said ".$number." times </p>"; 
+                                                                        }
+                                                                    ?>
+                                                                </span>    
+                                                            </div>                                                      
+                                                        </a>
+                                                    </div>                                                            
+                                                </div>
+                                            
+                                            <?PHP
+                                            $i=$i+1;
+                                        }
+                                    ?>
+                                </div>
+                            
                         </div>
                     </li>               
                     <li id="item2">
@@ -128,7 +239,18 @@ $(document).ready(function(){
                                                 <div class="txt_normal" style="text-align:center; padding-left:14px;"><?PHP echo $track["track_name"];?></div>
                                             </div>                                            
                                             <div class="artist_txt_holder" style="margin-top:0.6em;">
-                                                <div class="txt_cuss_words" style=" padding-left:14px;"><?PHP echo $profanityTrack["count_words"];?> gushy words</div>
+                                                <a href="#" class="tooltip">  
+                                                <div class="txt_cuss_words" style=" padding-left:14px;"><?PHP echo $profanityTrack["count_words"];?> <div style="text-decoration: underline; display:inline-block;">gushy</div> words
+                                                                <span class="txtSpan">
+                                                                    <?PHP 
+                                                                        foreach($profanityTrack["words"] as $aWord => $number)
+                                                                        {                                                                                                                                                        
+                                                                            echo "<p>".$aWord." said ".$number." times </p>"; 
+                                                                        }
+                                                                    ?>
+                                                                </span>                                                  
+                                                </div>
+                                                </a>                                                  
                                             </div>                                              
                                         </div>
                                         
@@ -156,7 +278,7 @@ $(document).ready(function(){
                                         
                                         <div id="artistDetailHolder" class="artistHolderWrapper">
                                             <div class="artist_holder">
-                                                <img src="<?PHP echo $track["album_coverart_100x100"]; ?>" width="158" height="158" style="vertical-align:middle; margin-left:2px; border-radius:76px;"/>
+                                                <img src="<?PHP echo $track["album_coverart_100x100"]; ?>" width="158" height="158" class='circleHolder'/>
                                             </div>
                                             <div class="artist_txt_holder" style="margin-top:1em;">
                                                 <div class="txt-artist-name"><?PHP echo $track["artist_name"];?></div>                                                
@@ -165,7 +287,18 @@ $(document).ready(function(){
                                                 <div class="txt_normal" style="text-align:center; padding-left:14px;"><?PHP echo $track["track_name"];?></div>
                                             </div>                                            
                                             <div class="artist_txt_holder" style="margin-top:0.6em;">
-                                                <div class="txt_cuss_words" style=" padding-left:14px;"><?PHP echo $profanityTrack["count_words"];?> materialistic words</div>
+                                                <a href="#" class="tooltip">  
+                                                <div class="txt_cuss_words" style=" padding-left:14px;"><?PHP echo $profanityTrack["count_words"];?> <div style="text-decoration: underline; display:inline-block;">materialistic</div> words
+                                                                <span class="txtSpan">
+                                                                    <?PHP 
+                                                                        foreach($profanityTrack["words"] as $aWord => $number)
+                                                                        {
+                                                                            echo "<p>".$aWord." said ".$number." times </p>"; 
+                                                                        }
+                                                                    ?>
+                                                                </span>                                                  
+                                                </div>
+                                                </a>
                                             </div>                                              
                                         </div>
                                         
@@ -183,7 +316,7 @@ $(document).ready(function(){
         
                                   
 </div>
-<div  class="product_carousel_states" style="padding-left:20px; margin-top:15em; margin-left:auto; margin-right:auto; max-width:60em;">   
+<div  class="product_carousel_states" style="margin-top:2em; margin-left:auto; margin-right:auto; max-width:900px;">   
         <div style="display:table-cell; width:19em;">
             <div id="leftButton" class="leftButton"></div> 
         </div>
@@ -211,16 +344,13 @@ $(document).ready(function(){
     $sexyTrack=$this->trackArray[$this->trackArray["sexyTrack"]];
 ?>
 
-<div id="item1" style="margin-left:auto; margin-right:auto; width: 900px; height: 428px; ">
-    <div id="reportRequestType" class="report_holder">
-        <div style="margin-top:2.5em;">
-
+<div id="item1" style="margin-left:auto; margin-right:auto; max-width: 900px;  margin-top:2.5em;">  
                     <div id="artistDetailHolder" class="artistSmallHolderWrapper">
                         <div class="artist_txt_holder" style="margin-top:1em;">
                             <div class="txt-artist-title">Most <span class="txt-artist-title alt">Positive</span></div>                                                
                         </div>                        
                         <div class="artist_holder_small" style="margin-top:1em;">
-                            <img src="<?PHP echo $positiveTrack["album_coverart_100x100"]; ?>" width="100" height="100" style="vertical-align:middle; margin-left:2px; border-radius:76px;">
+                            <img src="<?PHP echo $positiveTrack["album_coverart_100x100"]; ?>" width="100" height="100" class='circleHolder'/>
                         </div>
                         <div class="artist_txt_holder" style="margin-top:1em;">
                             <div class="txt-artist-name"><?PHP echo $positiveTrack["track_name"];?></div>                                                
@@ -236,7 +366,7 @@ $(document).ready(function(){
                             <div class="txt-artist-title">Most <span class="txt-artist-title alt">Negative</span></div>                                                
                         </div>                        
                         <div class="artist_holder_small" style="margin-top:1em;">
-                            <img src="<?PHP echo $negativeTrack["album_coverart_100x100"]; ?>" width="100" height="100" style="vertical-align:middle; margin-left:2px; border-radius:76px;">
+                            <img src="<?PHP echo $negativeTrack["album_coverart_100x100"]; ?>" width="100" height="100" class='circleHolder'>
                         </div>
                         <div class="artist_txt_holder" style="margin-top:1em;">
                             <div class="txt-artist-name"><?PHP echo $negativeTrack["track_name"]; ?></div>                                                
@@ -252,7 +382,7 @@ $(document).ready(function(){
                             <div class="txt-artist-title">Most <span class="txt-artist-title alt">Sex Obsessed</span></div>                                                
                         </div>                        
                         <div class="artist_holder_small" style="margin-top:1em;">
-                            <img src="<?PHP echo $sexyTrack["album_coverart_100x100"]; ?>" width="100" height="100" style="vertical-align:middle; margin-left:2px; border-radius:76px;">
+                            <img src="<?PHP echo $sexyTrack["album_coverart_100x100"]; ?>" width="100" height="100" class='circleHolder'>
                         </div>
                         <div class="artist_txt_holder" style="margin-top:1em;">
                             <div class="txt-artist-name"><?PHP echo $sexyTrack["track_name"]; ?></div>                                                
@@ -268,7 +398,7 @@ $(document).ready(function(){
                             <div class="txt-artist-title">Most <span class="txt-artist-title alt">Whiny</span></div>                                                
                         </div>                        
                         <div class="artist_holder_small" style="margin-top:1em;">
-                            <img src="<?PHP echo $whinyTrack["album_coverart_100x100"]; ?>" width="100" height="100" style="vertical-align:middle; margin-left:2px; border-radius:76px;">
+                            <img src="<?PHP echo $whinyTrack["album_coverart_100x100"]; ?>" width="100" height="100" class='circleHolder'>
                         </div>
                         <div class="artist_txt_holder" style="margin-top:1em;">
                             <div class="txt-artist-name"><?PHP echo $whinyTrack["track_name"]; ?></div>                                                
@@ -277,8 +407,4 @@ $(document).ready(function(){
                             <div class="txt_normal" style="text-align:center; padding-left:14px;"><?PHP echo $whinyTrack["artist_name"]; ?></div>
                         </div>                                                                                      
                     </div>
-
-
-                </div>
-    </div>
 </div>
