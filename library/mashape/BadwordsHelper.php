@@ -40,7 +40,7 @@ class BadwordsHelper{
     public function getSexyWordsArray()
     {
         $sexyArray=array(
-            "sex", "wobble" ,"sexy","make love","sexing","lovemaking","fucking","porn","kiss","kissing","bend over","cock","dick","pussy","fuck me","titties","lips","ass","cum","dong","tongue","touching"
+            "sex", "tits","wobble", "booty", "bum" ,"sexy","make love","sexing","lovemaking","fucking","porn","kiss","kissing","bend over","cock","dick","pussy","fuck me","titties","lips","ass","cum","dong","tongue","touching"
         );
         return $sexyArray;            
     }

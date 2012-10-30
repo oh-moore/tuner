@@ -12,7 +12,7 @@
  */
 
 require_once 'MusiXmatch.php';
-require_once 'SundayTextProcessing.php';
+require_once 'TextProcessing.php';
 
 class LyricsyoCombinator {
     
@@ -25,7 +25,7 @@ class LyricsyoCombinator {
     
     function __construct() {
         $this->musicMatchApi=new MusiXmatch($this->publicKey, $this->privateKey);
-        $this->sundayTextApi=new SundayTextProcessing($this->publicKey, $this->privateKey);
+        $this->sundayTextApi=new TextProcessing($this->publicKey, $this->privateKey);
     }    
     
     public function getTopBillBoardTracks($numSongs)

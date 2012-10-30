@@ -3,7 +3,7 @@ require_once("MashapeClient.php");
 
 
 class SundayTextProcessing {
-	const PUBLIC_DNS = "japerk-sunday-text-processing.p.mashape.com";
+	const PUBLIC_DNS = "text-processing.p.mashape.com";
 	private $authHandlers;
 
 	function __construct($publicKey, $privateKey) {

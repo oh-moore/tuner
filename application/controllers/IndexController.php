@@ -227,8 +227,11 @@ class IndexController extends Zend_Controller_Action
                 }
         );             
         
+        $newJsonLyricsArray["profanityArray"]=$profanityArray;
+        $newJsonLyricsArray["gushArray"]=$gushArray;
+        $newJsonLyricsArray["materialArray"]=$materialArray;
+        
         $this->view->trackDict=Zend_Json_Encoder::encode($newJsonLyricsArray);
-        $this->view->profanityDict=Zend_Json_Encoder::encode($profanityArray);
         
         $this->view->gushArray=$gushArray;
         $this->view->profanityArray=$profanityArray;
@@ -519,8 +522,9 @@ class IndexController extends Zend_Controller_Action
                         {
                             $posValue=$respVal;
                             $posTrack=$track;
-                            $numPositiveSongs=$numPositiveSongs+1;
+                            
                         }
+                        $numPositiveSongs=$numPositiveSongs+1;
                     } 
                     else if($labelResp=="neg")
                     {
@@ -528,8 +532,9 @@ class IndexController extends Zend_Controller_Action
                         {
                             $negValue=$respVal;
                             $negTrack=$track;
-                            $numNegativeSongs=$numNegativeSongs+1;
+                            
                         }
+                        $numNegativeSongs=$numNegativeSongs+1;
                     }                
                 }
                 $newJsonLyricsArray[$id]=$track;

@@ -2,20 +2,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Lyrics Yo!</title>
-    <meta name="description" content=" "/>
-    <meta name="keywords" content=""/>           
+  <title>Tuner</title>
+    <meta name="description" content="Tuner - Find out trends and sentiment in popular music lyrics http://tuner.io"/>
+    <meta name="keywords" content="trends, music, lyrics, sentiments, pop, billboard, charts, emotions, profanity, curses, tuner"/>           
     <meta name="author" content="@frasiocht"> 
+    <meta property="og:title" content="Tuner" />
+    <meta property="og:description" content="Tuner - Find out trends and sentiment in popular music lyrics http://tuner.io" />
+    <meta property="og:image" content="http://tuner.io/images/logo.png" />  
+    <meta property="og:url" content="http://tuner.io/" />         
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"/>
     <meta name="format-detection" content="telephone=no">    
     <link rel='stylesheet' href='/css/global.css' />
     <link rel='stylesheet' href='css/highlighter.css'/>
-    <script src='/js/jquery.js'></script>       
+    <script src='/js/jquery.js'></script>  
+    <script src='/js/jgestures.js'/>
     <script type="text/javascript">
-	  // unblock when ajax activity stops 
-      //$(document).ajaxStop($.unblockUI);
+        $(document).ready(function(){  
+                  
+        });
     </script>
+    <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8527040-10']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    </script>    
 </head>
 <body  ontouchstart="">
 <div id="fb-root"></div>
@@ -28,23 +47,91 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 <div id="header" class="header">
     <div id="headerButtonsWrapper" style="max-width:900px; margin-left:auto; margin-right:auto;">
-        <a href="/">
-            <div id="marvelIcon" class="" style="display:inline-block; padding-right:5em;">
-                <span class="txt_lyricsyo" style="line-height:63px; padding-left:5px;">LyricsYo</span>
+        <div style="float:left; display:inline-block;">
+            <a href="/">
+                <div id="marvelIcon" class="" style="display:inline-block; padding-right:5em;">
+                    <img src="/images/logo.png" style="padding-top:14px; padding-left:5px;" />
+                </div>
+            </a>
+        </div>
+        <div id="socialHolder" style="margin-left:5px; float:right; display: inline-block; line-height:63px;">
+            <div  style="display:inline-block;"><a id="showAbout" href="#about" style="color:white; padding-top:4px; margin-right:10px; font-size:19px; text-shadow: 2px 2px 2px #000;">About</a></div>
+            <div id="facebookHolder" class="socialHolder" style="width:6em;">
+                <div class="fb-like" data-href="http://tuner.io" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
             </div>
-        </a>
+            <div id="twitterHolder" class="socialHolder" style="width:5.5em;">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-text="Tuner - Find out trends and sentiment in popular music lyrics" data-via="tunertrends">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            </div>
+            <div id="googleHolder" class="socialHolder">
+                <!-- Place this tag where you want the share button to render. -->
+                <div class="g-plus" data-action="share" data-annotation="none" data-height="15"></div>
+
+                <!-- Place this tag after the last share tag. -->
+                <script type="text/javascript">
+                (function() {
+                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                    po.src = 'https://apis.google.com/js/plusone.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                })();
+                </script>
+            </div>   
+            <div class="socialHolder" style="margin-left: 6px;">
+                <a href="https://twitter.com/tunertrends" class="twitter-follow-button" data-show-count="false" data-size=="large" data-lang="en">Follow @tunertrends</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>            
+            </div>            
+        </div>        
+
     </div>
 </div>  
+<div id="mainContent">
     <?php echo $this->layout()->content; ?>
-    <div style="height:4em;"></div>
+</div>
+
+<div id="about" style="display:none; margin-left:auto; margin-right:auto;  max-width: 900px; margin-top:2.5em; margin-bottom:1em;" >
+    <div class="txt_header_large" style="text-align:left; margin-top:1.6em; margin-left:5px; margin-right:5px;">
+        About
+    </div>   
+    <div>        
+        <div style="max-width:45em; display:inline-block;" class="txt_normal">
+            <p style="font-weight: 600;"> 
+            Tuner.io was created over 12 hours at a hackday held by the great team at <a href="http://www.mashape.com" style="text-decoration: underline;">Mashape</a>. It's a website that looks at the lyrics of songs in the Billboard top 100, counts words and overall sentiment (positive, negative, neutral) and then organises the most popular results using the APIs available from <a href="http://musixmatch.com/" style="text-decoration: underline;">Musixmatch</a> and <a href="https://www.mashape.com/japerk/text-processing" style="text-decoration: underline;">Text Processing</a>.
+            </p>
+            <p>
+            We focused on some key areas such as profanity and love, hoping to draw some conclusions from the data about what type of songs make up the top 100.
+            </p>
+            <p>
+            The idea came from a discussion about 'What really makes up a rap song these days?" and whether it was possible to  show common elements to rap songs automatically. This idea then expanded into looking at the entire Billboard Top 100 and using all this generally overlooked data to analyse songs in a new way.
+            </p>
+            <p>
+            It's really interesting take on music, but we're only scratching the surface. There's some real potential with Tuner.io, especially if we add the ability to show trends over time. For example how much has profanity increased in songs over the last 20 years? Have songs been more positive or negative during the financial crisis? What type of song is more likely to get into the top 10?
+            </p>
+            <p>
+            Now for the technical part -
+            </p>
+            <p>
+            Tuner uses the MaShape API distributer to utilise a number of services to achieve it's goals of Lyrical sentiment analysis. Initially we make a call to Musixmatch to retrieve the current billboard top 100. (The billboard top 100 changes every Thursday at 12:00 EST, Tuner will update weekly to reflect this). Once we get all these tracks we then do separate calls for each to retrieve the lyrics (again from Musixmatch). We also use the Text Processing API service to gather the sentiment associated with each song. This API returns Negative, Positive and Neutral values associated with the lyrics. While this is going on we explode the song lyrics and sort them against preselected values representing Profanity, Love, Sex and Materialistic features. The results are then presented as an HTML page containing integration to Spotify's Javascript hooks and additionally their pop up player. Voila!
+            </p>
+            <p>
+            We had a lot of fun making Tuner.io and can't wait to take it to the next level, thanks to all the guys at Mashape, Musixmatch and Text Processing for your support!
+            </p>            
+            <p>
+                <a id="showMain" href="#" style="text-decoration: underline; font-weight:bold;">< Go Back</a>
+            </p>
+        </div>        
+    </div>
+</div>
+
+
+<div style="height:4em;"></div>
 
 <div id="footer" style="max-width:900px; margin-left:auto; margin-right:auto; margin-bottom:5em; line-height: 35px;">
     <div id="socialHolder" style="margin-left:5px; float:left; display: inline-block; line-height:35px;">
         <div id="facebookHolder" class="socialHolder" style="width:6em;">
-            <div class="fb-like" data-href="http://lyricsyo.whether.me" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+            <div class="fb-like" data-href="http://tuner.io" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
         </div>
         <div id="twitterHolder" class="socialHolder" style="width:5.5em;">
-            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://lyricsyo.whether.me" data-via="frasiocht">Tweet</a>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-text="Tuner - Find out trends and sentiment in popular music lyrics" data-via="tunertrends">Tweet</a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </div>
         <div id="googleHolder" class="socialHolder">
@@ -61,8 +148,30 @@
             </script>
         </div>     
     </div>
+       
     <div style="margin-left:5px; float:right; display: inline-block; ">
-        <img src="/images/logos.png"/>
+        <a href="https://www.mashape.com/japerk/text-processing"><div id="logo-text-processing"></div></a>
+        <a href="https://www.mashape.com"><div id="logo-mashape"></div></a>
+        <a href="http://musixmatch.com/"><div id="logo-musixmatch"></div></a>
     </div>
 </div>
+    
+<div class="hidden">
+        <script type="text/javascript">
+                <!--//--><![CDATA[//><!--
+                        var images = new Array()
+                        function preload() {
+                                for (i = 0; i < preload.arguments.length; i++) {
+                                        images[i] = new Image()
+                                        images[i].src = preload.arguments[i]
+                                }
+                        }
+                        preload(
+                                "images/musixmatch_on.png",
+                                "images/mashape_on.png",
+                                "images/textprocessing_on.png"
+                        )
+                //--><!]]>
+        </script>
+</div>     
 </body>

@@ -74,7 +74,7 @@ ol, ul {
 
 .carousel_holder
 {
-    width:900px;
+    max-width:900px;
     margin-left:auto;
     margin-right:auto;
     background-color: #fff;
@@ -90,7 +90,6 @@ ol, ul {
 .report_holder
 {
     width:900px;
-    height: 380px;
     margin-right:auto;
     margin-left:auto;
 }
@@ -101,6 +100,7 @@ ol, ul {
     width:152px;
     height:152px;
     text-align:center;
+    z-index:1;
 }
 
 .artist_holder_small {
@@ -109,25 +109,43 @@ ol, ul {
     width:100px;
     height:100px;
     text-align:center;
+    z-index:1;
 }
 
 .artistHolderWrapper
 {
     width: 175px;
+    margin-right:2px;
+    margin-left:2px;
     background-color:white;
     display:inline-block;
+    vertical-align: top;
+    z-index:1;
+}
+
+.display-inline-block{
+    display:inline-block;
+    vertical-align:top;
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 430px) {
+    .display-inline-block
+    {
+        margin-top:0.4em;
+        display:inline-block;
+        width:100%;
+    }
+}
+.artistSmallHolderWrapper
+{
+    width: 215px;
+    background-color:white;
+    display: table; margin: 0 auto;
     vertical-align: top;
 }
 
-.artistSmallHolderWrapper
-{
-    margin-left:auto;
-    margin-right:auto;
-    width: 215px;
-    background-color:white;
-    display:inline-block;
-    vertical-align: top;
-}
 
 .artist_small_txt_holder {
     margin-left:auto;
@@ -287,4 +305,112 @@ ol, ul {
 
 .txtSpan{
     text-align:center;   
+}
+
+#logo-text-processing{
+    margin-left:0.6em;
+    margin-right:0.6em;    
+    display:inline-block;
+    background-image:url('/images/textprocessing_off.png');
+    background-repeat:no-repeat;
+    background-size:100%;
+    height:37px;
+    width:136px;    
+}
+
+#logo-text-processing:hover{
+    background-image:url('/images/textprocessing_on.png');
+}
+
+#logo-mashape{
+    margin-left:0.6em;
+    margin-right:0.6em;
+    display:inline-block;
+    background-image:url('/images/mashape_off.png');
+    background-repeat:no-repeat;     
+    background-size:100%;
+    height:37px;
+    width:124px;    
+}
+
+#logo-mashape:hover{
+    background-image:url('/images/mashape_on.png');
+}
+
+#logo-musixmatch
+{
+    margin-left:0.6em;
+    margin-right:0.6em;    
+    display:inline-block;
+    background-image:url('/images/musixmatch_off.png');
+    background-size:100%;
+    height:37px;
+    width:196px;
+    background-repeat:no-repeat;    
+}
+
+#logo-musixmatch:hover{
+    background-image:url('/images/musixmatch_on.png');
+}
+
+.spotifyPlayHolder
+{
+    background-image:url('/images/1px.png');
+    opacity:0;
+    height:160px;
+    width:160px;
+    border-radius:76px;
+    position:absolute;
+    z-index:999;
+    margin-left:0;
+    margin-right:0;
+}
+
+.spotifyPlayButton
+{
+    opacity:1;
+    background-image:url('/images/playspotify.png');
+    background-repeat:no-repeat;  
+    background-size:100%;
+    height:59px;
+    width:98px;
+    z-index:1000;
+    position:absolute;
+    margin-left:30px;
+    margin-top:50px;
+}
+
+.spotifyPlayHolder:hover{
+    opacity:1;
+}
+
+.spotifyPlayHolderSmall
+{
+    background-image:url('/images/1px.png');
+    opacity:0;
+    height:103px;
+    width:103px;
+    border-radius:76px;
+    position:absolute;
+    z-index:999;
+    margin-left:0;
+    margin-right:0;
+}
+
+.spotifyPlayButtonSmall
+{
+    opacity:1;
+    background-image:url('/images/playspotify.png');
+    background-repeat:no-repeat;  
+    background-size:100%;
+    height:52px;
+    width:90px;
+    z-index:1000;
+    position:absolute;
+    margin-left:7px;
+    margin-top:20px;
+}
+
+.spotifyPlayHolderSmall:hover{
+    opacity:1;
 }
